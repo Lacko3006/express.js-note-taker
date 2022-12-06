@@ -3,7 +3,7 @@ const app = express();
 const PORT = 3001;
 const path = require("path");
 const fs = require("fs");
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -27,7 +27,9 @@ fs.readFile("./db/db.json", "utf8", (err, data) => {
 //note saved to the backend
 app.post("/api/notes", (req, res) => {
   const notesSaved = JSON.parse(noteData);
+  req.body.id = uuidv4();
   notesSaved.push(req.body);
+  console.log(req.body, "Hello");
   fs.writeFile("./db/db.json", JSON.stringify(notesSaved), (err) =>
     err ? console.error(err) : console.log(`New note added to the database!!`)
   );
@@ -41,5 +43,3 @@ app.get("/api/notes", (req, res) =>
 
 //backend listening to app
 app.listen(PORT, () => console.log(`${PORT} PORT is listening`));
-
-console.log(uuidv4());
