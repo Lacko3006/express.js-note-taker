@@ -16,14 +16,16 @@ app.get("/notes", (req, res) =>
 
 // reads db to collect data
 let noteData;
-fs.readFile("./db/db.json", "utf8", (err, data) => {
-  if (err) {
-    console.error(err);
-    return;
-  }
-  noteData = data;
-});
-
+function readDb() {
+  fs.readFile("./db/db.json", "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    noteData = data;
+  });
+}
+readDb();
 //note saved to the backend
 app.post("/api/notes", (req, res) => {
   const notesSaved = JSON.parse(noteData);
