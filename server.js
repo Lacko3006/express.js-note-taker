@@ -29,7 +29,6 @@ app.post("/api/notes", (req, res) => {
   const notesSaved = JSON.parse(noteData);
   req.body.id = uuidv4();
   notesSaved.push(req.body);
-  console.log(req.body, "Hello");
   fs.writeFile("./db/db.json", JSON.stringify(notesSaved), (err) =>
     err ? console.error(err) : console.log(`New note added to the database!!`)
   );
