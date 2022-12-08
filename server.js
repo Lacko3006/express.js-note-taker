@@ -17,7 +17,7 @@ app.get("/notes", (req, res) =>
 // reads db to collect data
 let noteData;
 function readDb() {
-  return fs.readFile("./db/db.json", "utf8", (err, data) => {
+  fs.readFile("./db/db.json", "utf8", (err, data) => {
     if (err) {
       console.error(err);
       return;
@@ -25,10 +25,10 @@ function readDb() {
     noteData = data;
   });
 }
-
+readDb();
 //note saved to the backend
-app.post("/api/notes", async (req, res) => {
-  await readDb();
+app.post("/api/notes", (req, res) => {
+  readDb();
   const notesSaved = JSON.parse(noteData);
   req.body.id = uuidv4();
   notesSaved.push(req.body);
